@@ -1,0 +1,3 @@
+﻿  ConsoleController.cpp
+C:\Users\Fayet\source\repos\WarshipProg\WarshipProg\ConsoleController.h(13,2): warning C4091: static : пропускается слева от "ConsoleController", когда ни одна переменная не объявлена
+  WarshipProg.vcxproj -> C:\Users\Fayet\source\repos\WarshipProg\Debug\WarshipProg.exe
