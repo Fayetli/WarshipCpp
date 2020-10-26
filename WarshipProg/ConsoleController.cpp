@@ -1,5 +1,6 @@
 #include "ConsoleController.h"
 
+typedef Zone::Cell Cell;
 
 void ConsoleController::SetPos(int x, int y)
 {
@@ -23,7 +24,20 @@ void ConsoleController::RenderMap(const Zone& playerZone, const Zone& botZone) {
 	for (int i = 0; i < 10; i++) {
 		for (int j = 0; j < 10; j++) {
 			SetPos(startPos.X + i*2, startPos.Y + j);
-			cout << "* ";
+			switch (playerZone.Get(i, j)) {
+			case Cell::IsShip:
+				cout << "* ";
+				break;
+			case Cell::IsDead:
+				cout << "X ";
+				break;
+			case Cell::AroundShip:
+				cout << "# ";
+				break;
+			default:
+				cout << "0 ";
+				break;
+			}
 		}
 	}
 
@@ -32,8 +46,93 @@ void ConsoleController::RenderMap(const Zone& playerZone, const Zone& botZone) {
 	for (int i = 0; i < 10; i++) {
 		for (int j = 0; j < 10; j++) {
 			SetPos(startPos.X + i * 2, startPos.Y + j);
-			cout << "* ";
+			switch (botZone.Get(i, j)) {
+			case Cell::IsShip:
+				cout << "* ";
+				break;
+			case Cell::IsDead:
+				cout << "X ";
+				break;
+			case Cell::AroundShip:
+				cout << "# ";
+				break;
+			default:
+				cout << "0 ";
+				break;
+			}
 		}
+	}
+}
+
+COORD ConsoleController::Handle()
+{
+	COORD minPos;
+	minPos.X = 30;
+	minPos.Y = 2;
+
+	COORD maxPos;
+	maxPos.X = 48;
+	maxPos.Y = 11;
+
+	COORD Pos = minPos;
+
+	SetPos(Pos);
+	
+	bool check = true;
+	while (check) {
+		Sleep(5);
+		char act = _getch();
+		int ch = static_cast<int>(act);
+		
+		switch (ch) {
+		case 13://enter
+			check = false;
+			break;
+		case 75://left
+			if(Pos.X != minPos.X)
+				Pos.X -= 2;
+			break;
+		case 77://right
+			if (Pos.X != maxPos.X)
+				Pos.X += 2;
+
+			break;
+		case 80://down
+			if (Pos.Y != maxPos.Y)
+				Pos.Y += 1;
+			break;
+		case 72://up
+			if (Pos.Y != minPos.Y)
+				Pos.Y -= 1;
+
+			break;
+		}
+
+
+		SetPos(Pos);
+	}
+
+	COORD choice;
+	choice.X = (Pos.X - minPos.X)/2;
+	choice.Y = (Pos.Y - minPos.Y);
+
+	ConsoleController::AttackAnimation(Pos);
+
+	/*SetPos(0, 0);
+	std::cout << "ChoiceX: " << choice.X << std::endl;
+	std::cout << "ChoiceY: " << choice.Y << std::endl;*/
+
+	return choice;
+}
+
+void ConsoleController::AttackAnimation(COORD coord)
+{
+	using namespace std;
+
+	for (int i = 0; i < 10; i++) {
+		SetPos(coord);
+		cout << i;
+		Sleep(100);
 	}
 }
 

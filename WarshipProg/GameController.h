@@ -1,6 +1,7 @@
 #pragma once
 #include "Zone.h"
 #include "ConsoleController.h"
+#include "BotController.h"
 
  class GameController
 {
@@ -16,7 +17,7 @@ private:
 	};
 
 	Winner Session();
-
+	bool Attack(COORD coord, Zone& zone);
 	
 };
 

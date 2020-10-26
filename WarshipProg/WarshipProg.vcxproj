@@ -139,14 +139,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Bot.cpp" />
+    <ClCompile Include="BotController.cpp" />
     <ClCompile Include="ConsoleController.cpp" />
     <ClCompile Include="GameController.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Zone.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Bot.h" />
+    <ClInclude Include="BotController.h" />
     <ClInclude Include="ConsoleController.h" />
     <ClInclude Include="GameController.h" />
     <ClInclude Include="Zone.h" />

@@ -24,10 +24,10 @@
     <ClCompile Include="Zone.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="Bot.cpp">
+    <ClCompile Include="ConsoleController.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="ConsoleController.cpp">
+    <ClCompile Include="BotController.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
   </ItemGroup>
@@ -38,10 +38,10 @@
     <ClInclude Include="Zone.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="Bot.h">
+    <ClInclude Include="ConsoleController.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="ConsoleController.h">
+    <ClInclude Include="BotController.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
   </ItemGroup>
