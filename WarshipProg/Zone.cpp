@@ -160,3 +160,54 @@ void Zone::RandomGenerate()
     }
     
 }
+
+bool Zone::RecursiveCheckShip(int x, int y, int xSkip, int ySkip)
+{
+    bool isBoommed = true;
+    for (int i = -1; i <= 1; i++)
+    {
+        for (int j = -1; j <= 1; j++)
+        {
+
+            if ((i == 0 && j == 0) || x + i > 9 || y + j > 9 || x + i < 0 || y + j < 0)
+                continue;
+            if (x + i == xSkip && y + j == ySkip)
+                continue;
+            if (zone[x + i][y + j] == Cell::IsShip)
+            {
+                isBoommed = false;
+                return isBoommed;
+            }
+            if (zone[x + i][y + j] == Cell::IsDead)
+            {
+                isBoommed = RecursiveCheckShip(x + i, y + j, x, y);
+            }
+
+        }
+    }
+    return isBoommed;
+}
+int Zone::RecursiveDesignateAroundBoommedShip(int x, int y, int xSkip, int ySkip)
+{
+    int count = 0;
+    for (int i = -1; i <= 1; i++)
+    {
+        for (int j = -1; j <= 1; j++)
+        {
+
+            if ((i == 0 && j == 0) || x + i > 9 || y + j > 9 || x + i < 0 || y + j < 0)
+                continue;
+            if (x + i == xSkip && y + j == ySkip)
+                continue;
+            if (zone[x + i][y + j] == Cell::IsDead)
+            {
+                count += RecursiveDesignateAroundBoommedShip(x + i, y + j, x, y);
+            }
+            else
+            {
+                zone[x + i][y + j] = Cell::AroundShip;
+            }
+        }
+    }
+    return ++count;
+}

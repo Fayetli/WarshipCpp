@@ -6,10 +6,8 @@ GameController::GameController() {
 }
 
 void GameController::Start() {
-	//Creating two zone for player and enemy(bot)
 	playerZone.RandomGenerate();
 	botZone.RandomGenerate();
-	//Randomize ships on zones
 	//Game session(player choice -> bot choice)
 
 	Winner winner = Session();
@@ -26,19 +24,27 @@ void GameController::Start() {
 }
 
 GameController::Winner GameController::Session() {
-	BotController bot;
+	BotController bot(playerZone);
 	ConsoleController::RenderMap(playerZone, botZone);
 
+	unsigned int playerScore = 0;
+	unsigned int botScore = 0;
 	while (true) {
 		while (true) {
+			ConsoleController::RenderMap(playerZone, botZone);
 			COORD playerChoice = ConsoleController::Handle();
 			bool playerShot = Attack(playerChoice, botZone);
-			ConsoleController::RenderMap(playerZone, botZone);
+
 			if (playerShot == false)
-				break;;
-			//CheckForKill
+				break;
+
+			bool isBoomed = botZone.RecursiveCheckShip(playerChoice.X, playerChoice.Y, playerChoice.X, playerChoice.Y);
+			if (isBoomed)
+				playerScore += botZone.RecursiveDesignateAroundBoommedShip(playerChoice.X, playerChoice.Y, playerChoice.X, playerChoice.Y);
+
+			ConsoleController::OutputScore("You", 30, 13, playerScore);
 		}
-		
+		//check for player win
 
 		while (true) {
 			COORD botChoice = bot.Attack();
@@ -47,10 +53,23 @@ GameController::Winner GameController::Session() {
 
 			if (botShot == false)
 				break;
-			//CheckForKill
-			Sleep(1500);
-		}
 
+			bool isBoomed = playerZone.RecursiveCheckShip(botChoice.X, botChoice.Y, botChoice.X, botChoice.Y);
+			if (isBoomed)
+			{
+				botScore += playerZone.RecursiveDesignateAroundBoommedShip(botChoice.X, botChoice.Y, botChoice.X, botChoice.Y);
+				bot.ResetStage();
+
+			}
+			else {
+				bot.UpStage();
+
+			}
+			Sleep(1500);
+
+			ConsoleController::OutputScore("Bot", 2, 13, botScore);
+		}
+		//check for bot win
 
 	}
 
@@ -62,8 +81,7 @@ GameController::Winner GameController::Session() {
 }
 
 bool GameController::Attack(COORD coord, Zone& zone) {
-	Cell cell = zone.Get(coord.X, coord.Y);
-	if (cell == Cell::IsShip)
+	if (zone.Get(coord.X, coord.Y) == Cell::IsShip)
 	{
 		zone.ChangeTo(coord.X, coord.Y, Cell::IsDead);
 		return true;
@@ -73,3 +91,4 @@ bool GameController::Attack(COORD coord, Zone& zone) {
 		return false;
 	}
 }
+

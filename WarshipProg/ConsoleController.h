@@ -13,5 +13,7 @@ public:
 	static void RenderMap(const Zone& playerZone, const Zone& botZone);
 	static COORD Handle();
 	static void AttackAnimation(COORD coord);
+	static void AttackAnimation(size_t x, size_t y);
+	static void OutputScore(std::string label, size_t x, size_t y, unsigned int score);
 };
 

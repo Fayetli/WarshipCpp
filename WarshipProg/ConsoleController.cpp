@@ -132,8 +132,28 @@ void ConsoleController::AttackAnimation(COORD coord)
 	for (int i = 0; i < 10; i++) {
 		SetPos(coord);
 		cout << i;
-		Sleep(100);
+		Sleep(25);
 	}
 }
 
+void ConsoleController::AttackAnimation(size_t x, size_t y)
+{
+	using namespace std;
 
+	COORD coord;
+	coord.X = x;
+	coord.Y = y;
+
+	for (int i = 0; i < 10; i++) {
+		SetPos(coord);
+		cout << i;
+		Sleep(25);
+	}
+}
+
+void ConsoleController::OutputScore(std::string label, size_t x, size_t y, unsigned int score) {
+	using namespace std;
+
+	SetPos(x, y);
+	cout << label << ": " << score;
+}
