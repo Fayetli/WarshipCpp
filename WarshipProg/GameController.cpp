@@ -14,17 +14,16 @@ void GameController::Start() {
 
 	switch (winner) {
 	case Winner::Player:
-	{
-		//Player win
-	}
-	case Winner::Bot: {
-		//Bot win
-	}
+		ConsoleController::OutputWinner("Player");
+		break;
+	case Winner::Bot:
+		ConsoleController::OutputWinner("Bot");
+		break;
 	}
 }
 
 GameController::Winner GameController::Session() {
-	BotController bot(playerZone);
+	BotController bot;
 	ConsoleController::RenderMap(playerZone, botZone);
 
 	unsigned int playerScore = 0;
@@ -43,13 +42,18 @@ GameController::Winner GameController::Session() {
 				playerScore += botZone.RecursiveDesignateAroundBoommedShip(playerChoice.X, playerChoice.Y, playerChoice.X, playerChoice.Y);
 
 			ConsoleController::OutputScore("You", 30, 13, playerScore);
-		}
-		//check for player win
 
+			if (playerScore == 20)
+				return Winner::Player;
+		}
+		
+		
+
+		BotController::Act botAct = BotController::Act::Miss;
 		while (true) {
-			COORD botChoice = bot.Attack();
-			bool botShot = Attack(botChoice, playerZone);
 			ConsoleController::RenderMap(playerZone, botZone);
+			COORD botChoice = bot.Attack(botAct);
+			bool botShot = Attack(botChoice, playerZone);
 
 			if (botShot == false)
 				break;
@@ -58,18 +62,21 @@ GameController::Winner GameController::Session() {
 			if (isBoomed)
 			{
 				botScore += playerZone.RecursiveDesignateAroundBoommedShip(botChoice.X, botChoice.Y, botChoice.X, botChoice.Y);
-				bot.ResetStage();
+				botAct = BotController::Act::Kill;
 
 			}
 			else {
-				bot.UpStage();
+				botAct = BotController::Act::Shot;
 
 			}
+			ConsoleController::OutputScore("Bot", 2, 13, botScore);
+
 			Sleep(1500);
 
-			ConsoleController::OutputScore("Bot", 2, 13, botScore);
+			if (botScore == 20)
+				return Winner::Bot;
 		}
-		//check for bot win
+		
 
 	}
 

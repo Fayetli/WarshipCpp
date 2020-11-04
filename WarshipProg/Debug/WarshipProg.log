@@ -1,3 +1,5 @@
-﻿  BotController.cpp
-E:\NuwmFiles\Nuwm_sem_3\Programming\WarshipCpp\WarshipProg\ConsoleController.h(18,2): warning C4091: static : пропускается слева от "ConsoleController", когда ни одна переменная не объявлена
+﻿  ConsoleController.cpp
+E:\NuwmFiles\Nuwm_sem_3\Programming\WarshipCpp\WarshipProg\ConsoleController.h(20,2): warning C4091: static : пропускается слева от "ConsoleController", когда ни одна переменная не объявлена
+E:\NuwmFiles\Nuwm_sem_3\Programming\WarshipCpp\WarshipProg\ConsoleController.cpp(147,13): warning C4267: =: преобразование из "size_t" в "SHORT"; возможна потеря данных
+E:\NuwmFiles\Nuwm_sem_3\Programming\WarshipCpp\WarshipProg\ConsoleController.cpp(148,13): warning C4267: =: преобразование из "size_t" в "SHORT"; возможна потеря данных
   WarshipProg.vcxproj -> E:\NuwmFiles\Nuwm_sem_3\Programming\WarshipCpp\Debug\WarshipProg.exe

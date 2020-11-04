@@ -9,8 +9,8 @@
 
 
 int main() {
-	srand(time(NULL));
-
+	//srand(time(NULL));
+	ConsoleController::RevertHandle();
 	GameController controller;
 	controller.Start();
 

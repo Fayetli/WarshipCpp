@@ -9,7 +9,7 @@ private:
 	std::vector<COORD> _toAttack;
 	COORD _previousAttack;
 	COORD _lastGreatAttack;
-	const Zone* _playerZone;
+	Zone _playerZone;
 
 	enum Stage {
 		Random,
@@ -17,16 +17,24 @@ private:
 		VectorContinue,
 		ChangeVector
 	};
-	Stage stage = Stage::Random;
+	
+	
+	
+	Stage _stage = Stage::Random;
 public:
-	BotController(const Zone& playerZone);
-	COORD Attack();
+	enum Act {
+		Miss,
+		Shot,
+		Kill
+	};
+
+	BotController();
+	COORD Attack(Act lastAct);
 	COORD RandomAttack();
 	COORD FindAroundShot();
-	bool ContinueVectorAttack();
-	bool ChangeVectorAttack();
+	COORD ContinueVectorAttack();
+	void ChangeVectorAttack();
 	void RemoveCoordFromVector(size_t x, size_t y);
-	void UpStage();
-	void ResetStage();
+	void RemoveCoordFromVector();
 };
 

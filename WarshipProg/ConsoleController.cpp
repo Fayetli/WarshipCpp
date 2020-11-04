@@ -2,6 +2,8 @@
 
 typedef Zone::Cell Cell;
 
+COORD ConsoleController::_lastHandlePosition;
+
 void ConsoleController::SetPos(int x, int y)
 {
 	COORD c;
@@ -48,7 +50,7 @@ void ConsoleController::RenderMap(const Zone& playerZone, const Zone& botZone) {
 			SetPos(startPos.X + i * 2, startPos.Y + j);
 			switch (botZone.Get(i, j)) {
 			case Cell::IsShip:
-				cout << "* ";
+				cout << "0 ";
 				break;
 			case Cell::IsDead:
 				cout << "X ";
@@ -74,7 +76,7 @@ COORD ConsoleController::Handle()
 	maxPos.X = 48;
 	maxPos.Y = 11;
 
-	COORD Pos = minPos;
+	COORD Pos = _lastHandlePosition;
 
 	SetPos(Pos);
 	
@@ -116,6 +118,7 @@ COORD ConsoleController::Handle()
 	choice.X = (Pos.X - minPos.X)/2;
 	choice.Y = (Pos.Y - minPos.Y);
 
+	_lastHandlePosition = Pos;
 	ConsoleController::AttackAnimation(Pos);
 
 	/*SetPos(0, 0);
@@ -157,3 +160,17 @@ void ConsoleController::OutputScore(std::string label, size_t x, size_t y, unsig
 	SetPos(x, y);
 	cout << label << ": " << score;
 }
+
+void ConsoleController::OutputWinner(std::string winner)
+{
+	SetPos(2, 15);
+	std::cout << winner << " win this game!";
+}
+
+void ConsoleController::RevertHandle()
+{
+	_lastHandlePosition.X = 30;
+	_lastHandlePosition.Y = 2;
+}
+
+
