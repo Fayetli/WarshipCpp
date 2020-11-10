@@ -15,7 +15,6 @@ private:
 		Random,
 		FindAround,
 		VectorContinue,
-		ChangeVector
 	};
 	
 	
